@@ -1,0 +1,18 @@
+#code for table containing the sample id, age, gender, and disease state information#
+
+
+Create table sample_info (
+sampleID varchar(10) not null primary key,
+source varchar (50) not null,
+age varchar(20) not null,
+disease_state varchar(25) not null,
+gender varchar(20) not null
+);
+
+
+
+load data local infile 'sampledatatable' into table sample_info
+(sampleID, source, age, disease_state, gender);
+
+
+
