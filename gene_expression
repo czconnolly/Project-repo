@@ -1,7 +1,7 @@
 create table gene_expression (
-experiment varchar (10) not null primary key,
+experiment varchar (10) not null,
 foreign key (experiment) references sample_info (sampleID),
 expression integer not null,
-probeID varchar(20) not null);
+probeID varchar(20) not null primary key);
 
 
