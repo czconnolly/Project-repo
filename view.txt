@@ -1,13 +1,12 @@
 #creates view called 'joinedtables' of all four tables joined together #
 
-create view joinedtables
+create view joinedtables.v
 as select
-	 sampleID, age, gender, disease_state, source, probeID, expression,
-	 experiment, probe_names, geneID, geneid, gene_symbol, gene_title
+	si.sampleID, si.age, si.gender, si.disease_state, si.source, ge.probeID, ge.expression,
+	ge.experiment, p.probe_names, p.geneID, g.geneid, g.gene_symbol, g.gene_title
 from
-	 sample_info, gene_expression, probe, gene
+	sample_info si, gene_expression ge, probe p, gene g
 where
-
-sample_info inner join gene_expression on sample_info.sampleID = gene_expression.experiment
-inner join probe onprobe.probe_names = gene_expresison.probeID
-inner join gene on gene.geneid = probe.geneID;
+	sample_info inner join gene_expression on si.sampleID = ge.experiment
+	inner join probe on p.probe_names = ge.probeID
+	inner join gene on g.geneid = p.geneID;
