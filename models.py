@@ -1,3 +1,4 @@
+
 import MySQLdb
 
 class dbhandler():
@@ -35,13 +36,14 @@ class gene():
 		self.gene_symbol = result[1]
 		
 		probesql='select probe_names from probe where geneid=%s'
-		cursor.execute(probesql, (self.gene_id,))
+		cursor.execute(probesql,(self.gene_id,))
 		for result in cursor.fetchall():
 			self.probelist.append (result[0])
+		return probelist
+			
 
-		exprsql='select expression,sampleID, from gene_expression where probe_names=%s'
-		cursor.execute(exprsql, (probesql,(self.gene_id,)))
+		exprsql='select expression,experiment from joinedtables where geneid=%s'
+		cursor.execute(exprsql,(self.gene_id,))
 		for result in cursor.fetchall():
 			self.exprlist[result[1]]=result[0]
-
-
+		return exprlist
