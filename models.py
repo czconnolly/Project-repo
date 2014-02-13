@@ -26,24 +26,41 @@ class gene():
 		self.gene_id=geneid
 		db=dbhandler()
 		cursor=db.cursor()
-		sql='select gene_title, gene_symbol, geneid from gene where geneid=%s'
-		cursor.execute(sql,(geneid,))
+		sql='select gene_title, gene_symbol from gene where geneid=%s'
+			 #execute the sql command
+		self.gene_id=geneid
+		cursor.execute(sql,(gene_id,))
+			#query db. get result and populate class fields. 
+		result=cursor.fetchone()
+		for answer in result:
+				self.gene_title=answer[0]
+				self.gene_symbol=answer[1]
+			#now print fetched result
+		return result
 
-		#query db. get result and populate class fields. 
 
-		result= cursor.fetchone()
-		self.gene_title = result[0]
-		self.gene_symbol = result[1]
-		
-		probesql='select probe_names from probe where geneid=%s'
-		cursor.execute(probesql,(self.gene_id,))
-		for result in cursor.fetchall():
-			self.probelist.append (result[0])
-		return probelist
+		#print 'self.gene_title=%s,self.gene_symbol=%s'\
+		#			(gene_title,gene_symbol)
+		#except: 
+			#print 'Error fetching data' 
+
+
+
+
+
+
+
+
+
+
+		#probesql='select probe_names from probe where geneid=%s'
+		#cursor.execute(probesql,(self.gene_id,))
+		#for result in cursor.fetchall():
+		#	self.probelist.append (result[0])
+		#return result
 			
-
-		exprsql='select expression,experiment from joinedtables where geneid=%s'
-		cursor.execute(exprsql,(self.gene_id,))
-		for result in cursor.fetchall():
-			self.exprlist[result[1]]=result[0]
-		return exprlist
+		#exprsql='select expression,experiment,probe_names from joinedtables where geneid=%s'
+		#cursor.execute(exprsql,(self.gene_id,))
+		#for result in cursor.fetchall():
+		#	self.exprlist[result[1]]=result[0]
+		#return result
