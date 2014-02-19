@@ -24,26 +24,18 @@ class gene():
 
 	def __init__(self,geneid): 
 		self.geneid=geneid
-		self.gene_title=gene_title
-		self.gene_symbol=gene_symbol
 		db=dbhandler()
 		cursor=db.cursor()
-		sql='select gene_title,gene_symbol,geneid from gene where geneid=%s'
+		sql='select gene_title,gene_symbol from gene where geneid=%s'
 			 #execute the sql command
-		
-	try:
 		cursor.execute(sql,(geneid,))
 			#query db. get result and populate class fields. 
 		results=cursor.fetchone()
 		self.gene_title=result[0]
 		self.gene_symbol=result[1]
-		self.geneid=result[2]
- 
-		for result in cursor.fetchone():
-			print 'self.geneid=%s,self.gene_title=%s,self.gene_symbol=%s'\
-					(geneid,gene_title,gene_symbol)
-	except: 
-		print 'Error fetching data' 
+ 		for result in cursor.fetchone():
+			print 'self.gene_title=%s,self.gene_symbol=%s'\
+					(self.geneid,self.gene_title,self.gene_symbol)
 
 
 
