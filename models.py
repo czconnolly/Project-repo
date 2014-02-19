@@ -61,16 +61,13 @@ class gene():
 		hsql='select sum(expression)/count(expression) as average from joinedtables where geneid=%s and disease_state=Healthy'
 		cursor.execute(hsql,(geneid))
 		hresult=cursor.fetchone()
-		self.hexpvalue=results[0]
-		print 'self.hexpvalue=%s'\
-			(self.hexpvalue)
-
+		self.hexpvalue=result[0]
+		
 		dsql='select sum(expression)/count(expression) as average from joinedtables where geneid=%s and disease_state=Alzheimers disease-like'
                 cursor.execute(dsql,(geneid))
                 dresult=cursor.fetchone()
-                self.dexpvalue=results[0]
-                print 'self.dexpvalue=%s'\
-                        (self.dexpvalue)
+                self.dexpvalue=result[0]
+                
 
 
 		#for result in expvalue:
