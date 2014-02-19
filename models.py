@@ -21,6 +21,9 @@ class gene():
 	geneid=''
 	probelist=[]
 	exprlist={}
+	hexpvalue=''
+	dexpvalue=''
+	
 
 	def __init__(self,geneid): 
 		self.geneid=geneid
@@ -31,29 +34,47 @@ class gene():
 		cursor.execute(sql,(geneid,))
 			#query db. get result and populate class fields. 
 		results=cursor.fetchone()
-		self.gene_title=result[0]
-		self.gene_symbol=result[1]
- 		for result in cursor.fetchone():
-			print 'self.gene_title=%s,self.gene_symbol=%s'\
-					(self.geneid,self.gene_title,self.gene_symbol)
+		self.gene_title=results[0]
+		self.gene_symbol=results[1]		
+	
+		#print 'self.gene_title=%s,self.gene_symbol=%s'\
+		#	(self.gene_title,self.gene_symbol)
 
-
-
-
-
-
-
-
-
-
-		#probesql='select probe_names from probe where geneid=%s'
-		#cursor.execute(probesql,(self.gene_id,))
-		#for result in cursor.fetchall():
-		#	self.probelist.append (result[0])
-		#return result
+		probesql='select probe_names from probe where geneid=%s'
+		cursor.execute(probesql,(self.geneid,))
+		resultlist=cursor.fetchall()
+		for result in resultlist:
+			self.probelist.append(result[0])
+		
 			
-		#exprsql='select expression,experiment,probe_names from joinedtables where geneid=%s'
-		#cursor.execute(exprsql,(self.gene_id,))
-		#for result in cursor.fetchall():
-		#	self.exprlist[result[1]]=result[0]
-		#return result
+		exprsql='select expression,experiment,probe_names from joinedtables where geneid=%s'
+		cursor.execute(exprsql,(self.geneid,))
+		for result in cursor.fetchall():
+			self.exprlist[result[1]]=result[0]
+		
+
+	def get_expressioncomparison(self,geneid):
+	#gets the average gene expression for a gene in healthy samples and the average expression of that gene in disease like samples. 
+		self.geneid=geneid
+		db=dbhandler()
+		cursor=db.cursor()
+		hsql='select sum(expression)/count(expression) as average from joinedtables where geneid=%s and disease_state=Healthy'
+		cursor.execute(hsql,(geneid))
+		hresult=cursor.fetchone()
+		self.hexpvalue=results[0]
+		print 'self.hexpvalue=%s'\
+			(self.hexpvalue)
+
+		dsql='select sum(expression)/count(expression) as average from joinedtables where geneid=%s and disease_state=Alzheimers disease-like'
+                cursor.execute(dsql,(geneid))
+                dresult=cursor.fetchone()
+                self.dexpvalue=results[0]
+                print 'self.dexpvalue=%s'\
+                        (self.dexpvalue)
+
+
+		#for result in expvalue:
+		#	self.averageexp.append(result[0])
+		#return expvalue
+
+
