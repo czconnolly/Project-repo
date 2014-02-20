@@ -1,4 +1,4 @@
-#creates view called 'joinedtables' of all four tables joined together #
+#creates view called 'joinedtables' of all four tables joined together 
 
 create view joinedtables as
 select
