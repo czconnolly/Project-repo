@@ -1,3 +1,5 @@
+#Creates the table gene_expression. Have since altered the table in mySQL to set probeID and experiment as foreign keys to the probe and experiment tables. I then altered table to make experiment and probeID composite key. 
+
 create table gene_expression (
 experiment varchar (10) not null,
 foreign key (experiment) references sample_info (sampleID),
