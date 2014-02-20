@@ -1,4 +1,0 @@
-create table gene (gene_title VARCHAR(20), gene_symbol VARCHAR(20), gene_id VARCHAR(20));
-load data local infile 'GDS4128' into table gene ignore 1 lines (@dummy, @dummy, @dummy,
-@dummy, @dummy,@dummy, @dummy, @dummy, @dummy, @dummy,@dummy, @dummy, @dummy, @dummy,
-@dummy,@dummy, @dummy, @dummy, @dummy, @dummy, gene_title, gene_symbol, gene_id);
