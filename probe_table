@@ -1,3 +1,5 @@
+#creates the probe table. 
+
 create table probe (
 probe_names varchar(20) not null primary key,
 foreign key (probe_names) references gene_expression (probeID),
