@@ -1,4 +1,4 @@
-#code for table containing the sample id, age, gender, and disease state information#
+#code to create the table sample_info containing the sample id, age, gender, and disease state information
 
 
 Create table sample_info (
@@ -10,6 +10,7 @@ gender varchar(20) not null
 );
 
 
+#loads data from a text file into this table 
 
 load data local infile 'sampledatatable' into table sample_info
 (sampleID, source, age, disease_state, gender);
