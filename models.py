@@ -1,4 +1,4 @@
-
+#creates a connection to the mySQL database
 import MySQLdb
 
 class dbhandler():
@@ -7,14 +7,17 @@ class dbhandler():
 	dbuser='czconnolly'
 	dbpassword='ginger1993'
 
+#if the connection is lost it will reconnect
         def __init__(self):
 	        if dbhandler.connection == None:
 		        dbhandler.connection = MySQLdb.connect(db=dbhandler.dbname, \
 user=dbhandler.dbuser, passwd=dbhandler.dbpassword)
 
+#creates a cursor to use in python. It allows the python code to execute SQL commands in a database session
 	def cursor(self):
 		return dbhandler.connection.cursor()
 
+#creates the class gene and defines the class variables
 class gene():
 	gene_symbol=''
 	gene_title=''
@@ -24,35 +27,33 @@ class gene():
 	hexpvalue=''
 	dexpvalue=''
 	
-
+#initialization method that python calls when you create a new instance of this class
 	def __init__(self,geneid): 
 		self.geneid=geneid
 		db=dbhandler()
 		cursor=db.cursor()
 		sql='select gene_title,gene_symbol from gene where geneid=%s'
-			 #execute the sql command
+		#executes the sql command
 		cursor.execute(sql,(geneid,))
-			#query db. get result and populate class fields. 
+		#query db. get result and populate class fields. 
 		results=cursor.fetchone()
 		self.gene_title=results[0]
 		self.gene_symbol=results[1]		
 	
-		#print 'self.gene_title=%s,self.gene_symbol=%s'\
-		#	(self.gene_title,self.gene_symbol)
-
+		# fetches the probe names and creates a list of all the results
 		probesql='select probe_names from probe where geneid=%s'
 		cursor.execute(probesql,(self.geneid,))
 		resultlist=cursor.fetchall()
 		for result in resultlist:
 			self.probelist.append(result[0])
-		
-			
+
+		#fetches all the probe names and expression values for the gene for each experiment. not quite working yet			
 		exprsql='select expression,experiment,probe_names from joinedtables where geneid=%s'
 		cursor.execute(exprsql,(self.geneid,))
 		for result in cursor.fetchall():
 			self.exprlist[result[1]]=result[0]
 		
-
+	#defines a new method
 	def get_expressioncomparison(self,geneid):
 	#gets the average gene expression for a gene in healthy samples and the average expression of that gene in disease like samples. 
 		self.geneid=geneid
@@ -69,9 +70,5 @@ class gene():
                 self.dexpvalue=result[0]
                 
 
-
-		#for result in expvalue:
-		#	self.averageexp.append(result[0])
-		#return expvalue
 
 
