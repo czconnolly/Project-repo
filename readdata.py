@@ -6,18 +6,18 @@ infile='GDS4128'
 
 fh = open(infile)
 
-#Returns a list of lines in the file from the line '!dataset_table_begin'
+#Returns a list of lines in the file after '!dataset_table_begin'
 line= fh.readline()
 while line[:20] != '!dataset_table_begin':
     line=fh.readline()
 
-
+#we don't want header names in the .txt file so header will get rid of these using strip
 header= fh.readline().strip()
 
 #creates a dictionary for column names
 colnames={}
 
-#splits the string into a string array using \t to separate them 
+#splits the string when there is a tab into a string array
 index=0
 for title in header.split('\t'):
     colnames[title]=index
