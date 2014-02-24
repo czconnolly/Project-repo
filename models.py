@@ -60,12 +60,12 @@ class gene():
 		db=dbhandler()
 		cursor=db.cursor()
 		hsql='select sum(expression)/count(expression) as average from joinedtables where geneid=%s and disease_state=Healthy'
-		cursor.execute(hsql,(geneid))
-		hresult=cursor.fetchone()
-		self.hexpvalue=result[0]
+		cursor.execute(hsql,(self.geneid)) #queries db
+		hresult=cursor.fetchone() #fetches the result
+		self.hexpvalue=result[0] #populates hexpvalue with the result
 		
 		dsql='select sum(expression)/count(expression) as average from joinedtables where geneid=%s and disease_state=Alzheimers disease-like'
-                cursor.execute(dsql,(geneid))
+                cursor.execute(dsql,(self.geneid))
                 dresult=cursor.fetchone()
                 self.dexpvalue=result[0]
                 
